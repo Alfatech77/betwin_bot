@@ -12,7 +12,7 @@ if (isset($update['message'])) {
     $first_name = $update['message']['from']['first_name'] ?? 'Oyuncu';
     $username = $update['message']['from']['username'] ?? '';
 
-    // InfinityFree'ye JSON formatında gönder
+    // InfinityFree'ye veriyi "JSON" olarak gönder (En Güvenli Yol)
     $post_data = json_encode([
         'key' => $api_key,
         'chat_id' => $chat_id,
@@ -24,12 +24,14 @@ if (isset($update['message'])) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    // InfinityFree engelini aşmak için User-Agent ekliyoruz
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
     curl_exec($ch);
     curl_close($ch);
 
     if ($text == "/start") {
-        $msg = "Hoş geldin $first_name! Kaydın yapıldı. Giriş butonuna basabilirsin.";
+        $msg = "Hoş geldin $first_name! Kaydın başarıyla oluşturuldu. Giriş yaparak hemen oynamaya başlayabilirsin.";
         $keyboard = json_encode([
             'inline_keyboard' => [[
                 ['text' => '🎰 GİRİŞ YAP', 'web_app' => ['url' => 'https://iambetwin.ct.ws/index.php']]
