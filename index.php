@@ -1,6 +1,4 @@
-<?php
-// iAM BET WIN - Vercel Bot Bridge (Temizlenmiş Versiyon)
-$bot_token = "8766492558:AAED9ophEGjswQbYQdZTkfSP4pSxasZWD_0";
+<?php $bot_token = "8766492558:AAED9ophEGjswQbYQdZTkfSP4pSxasZWD_0";
 $api_url = "https://iambetwin.ct.ws/sistem/api.php";
 $api_key = "betwin_ozel_sifre_123";
 
