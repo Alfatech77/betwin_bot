@@ -8,11 +8,9 @@ $update = json_decode($content, true);
 
 if (isset($update['message'])) {
     $chat_id = $update['message']['chat']['id'];
-    $text = $update['message']['text'] ?? '';
     $first_name = $update['message']['from']['first_name'] ?? 'Oyuncu';
     $username = $update['message']['from']['username'] ?? '';
 
-    // InfinityFree'ye veriyi "JSON" olarak gönder (En Güvenli Yol)
     $post_data = json_encode([
         'key' => $api_key,
         'chat_id' => $chat_id,
@@ -24,22 +22,16 @@ if (isset($update['message'])) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-    // InfinityFree engelini aşmak için User-Agent ekliyoruz
-    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+    curl_setopt($ch, CURLOPT_REFERER, 'https://iambetwin.ct.ws/'); // Kritik ekleme
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0');
     curl_exec($ch);
     curl_close($ch);
 
-    if ($text == "/start") {
-        $msg = "Hoş geldin $first_name! Kaydın başarıyla oluşturuldu. Giriş yaparak hemen oynamaya başlayabilirsin.";
-        $keyboard = json_encode([
-            'inline_keyboard' => [[
-                ['text' => '🎰 GİRİŞ YAP', 'web_app' => ['url' => 'https://iambetwin.ct.ws/index.php']]
-            ]]
-        ]);
-        
-        $send_url = "https://api.telegram.org/bot$bot_token/sendMessage?chat_id=$chat_id&text=" . urlencode($msg) . "&reply_markup=" . urlencode($keyboard);
-        file_get_contents($send_url);
+    if (($update['message']['text'] ?? '') == "/start") {
+        $msg = "Hoş geldin $first_name! Hesabın aktif edildi. 🎰";
+        $keyboard = json_encode(['inline_keyboard' => [[['text' => '🎰 GİRİŞ YAP', 'web_app' => ['url' => 'https://iambetwin.ct.ws/index.php']]]]]);
+        file_get_contents("https://api.telegram.org/bot$bot_token/sendMessage?chat_id=$chat_id&text=".urlencode($msg)."&reply_markup=".urlencode($keyboard));
     }
 }
 echo "Vercel Bridge Active";
