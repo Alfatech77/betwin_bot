@@ -1,6 +1,6 @@
 <?php
 $bot_token = "8766492558:AAED9ophEGjswQbYQdZTkfSP4pSxasZWD_0";
-$api_url = "https://iambetwin.ct.ws/sistem/api.php";
+$api_url = "https://alptekincoteli.site/sistem/api.php";
 $api_key = "betwin_ozel_sifre_123";
 
 $content = file_get_contents("php://input");
