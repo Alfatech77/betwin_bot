@@ -30,7 +30,7 @@ if (isset($update['message'])) {
 
     if (($update['message']['text'] ?? '') == "/start") {
         $msg = "Hoş geldin $first_name! Hesabın aktif edildi. 🎰";
-        $keyboard = json_encode(['inline_keyboard' => [[['text' => '🎰 GİRİŞ YAP', 'web_app' => ['url' => 'https://iambetwin.ct.ws/index.php']]]]]);
+        $keyboard = json_encode(['inline_keyboard' => [[['text' => '🎰 GİRİŞ YAP', 'web_app' => ['url' => 'https://alptekincoteli.site/index.php']]]]]);
         file_get_contents("https://api.telegram.org/bot$bot_token/sendMessage?chat_id=$chat_id&text=".urlencode($msg)."&reply_markup=".urlencode($keyboard));
     }
 }
